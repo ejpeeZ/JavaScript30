@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+  <div class="keys">
+    <div class="container">
+      <div data-key="65" class="key" id="devteam">
+      </div>
+      <span class="sound">DEVTEAM</span>
+    </div>
+    <div class="container">
+      <div data-key="83" class="key" id="reactification">
+      </div>
+      <span class="sound">REACTIFICATION</span>
+    </div>
+    <div class="container">
+      <div data-key="68" class="key" id="directie">
+      </div>
+      <span class="sound">JULLIE</span>
+    </div>
+    <div class="container">
+      <div data-key="70" class="key" id="alex">
+      </div>
+      <span class="sound">Alexander</span>
+    </div>
+    <div class="container">
+      <div data-key="71" class="key" id="bram">
+      </div>
+      <span class="sound">Bram</span>
+    </div>
+    <div class="container">
+      <div data-key="72" class="key" id="maarten">
+      </div>
+      <span class="sound">Maarten</span>
+    </div>
+    <div class="container">
+      <div data-key="74" class="key" id="party">
+      </div>
+      <span class="sound">party</span>
+    </div>
+    <div class="container">
+      <div data-key="75" class="key" id="applause">
+      </div>
+      <span class="sound">applause</span>
+    </div>
+    <div class="container">
+      <div data-key="76" class="key" id="disco">
+      </div>
+      <span class="sound">disco</span>
+    </div>
+    <img class="coverup" src="yoastlogo.png" />
+  </div>
+
+  <audio data-key="65" src="sounds/devteam.m4a"></audio>
+  <audio data-key="83" src="sounds/reactification.m4a"></audio>
+  <audio data-key="68" src="sounds/wenst.m4a"></audio>
+  <audio data-key="70" src="sounds/alex.m4a"></audio>
+  <audio data-key="71" src="sounds/bram.m4a"></audio>
+  <audio data-key="72" src="sounds/maarten.m4a"></audio>
+  <audio data-key="74" src="sounds/partyblower.m4a"></audio>
+  <audio data-key="75" src="sounds/applause.m4a"></audio>
+  <audio data-key="76" src="sounds/disco.m4a"></audio>
+
+<script>
+  function getNumber() {
+    return Math.floor( Math.random() * 256 );
+  }
+  function createSynesthesia() {
+    const redness = getNumber();
+    const greenness = getNumber();
+    const blueness = getNumber();
+    return `rgba( ${redness},${greenness},${blueness},0.6 )`;
+  }
+  const overlay = document.querySelector( ".keys" );
+
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    if ( ! audio ) return; // Early return if key not relevant
+    overlay.style.background = createSynesthesia();
+    audio.currentTime = 0; // Rewind audio
+    audio.play();
+    key.classList.add( "playing" );
+  }
+
+  function removeTransition( event ) {
+    if ( event.propertyName !== "transform" ) return; // skip if not transition
+    this.classList.remove( "playing" );
+    overlay.style.background = null;
+  }
+
+  const keys = document.querySelectorAll( ".key" );
+  keys.forEach( key => key.addEventListener( "transitionend", removeTransition ));
+
+  window.addEventListener( 'keydown', playSound );
+</script>
+
+
+</body>
+</html>

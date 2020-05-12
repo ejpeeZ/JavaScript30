@@ -1,0 +1,127 @@
+html {
+  font-size: 10px;
+  /* background: url(https://yoast.com/app/uploads/2019/10/Yoast_10_years_owl_FI-1.png) bottom center; */
+  background: url("stayingalive.gif") bottom center;
+  background-size: cover;
+}
+
+body,html {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.keys {
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 100%;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+.key {
+  border: .4rem solid black;
+  border-radius: .5rem;
+  margin: 1rem;
+  font-size: 1.5rem;
+  padding: 1rem .5rem;
+  transition: all .07s ease;
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  color: white;
+  background: rgba(0,0,0,0.4);
+  text-shadow: 0 0 .5rem black;
+  box-sizing: border-box;
+}
+
+#alex {
+  background: url("alex.png") bottom center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#bram {
+  background: url( "bram.jpeg" ) bottom center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#maarten {
+  background: url("maarten.png") bottom center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#devteam {
+  background: url(https://dev-to-uploads.s3.amazonaws.com/uploads/organization/profile_image/1/0213bbaa-d5a1-4d25-9e7a-10c30b455af0.png) bottom center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#reactification {
+  background: url(https://ucarecdn.com/e0e129c4-1e9e-4132-aa17-d6d8860327ff/) bottom center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#directie {
+  background: url("directie.png") bottom center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#party {
+  background: url(https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/237/party-popper_1f389.png) bottom center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#applause {
+  background: url("applause.png") bottom center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#disco {
+  background: url("disco.png") bottom center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.playing {
+  transform: scale(1.1);
+  border-color: #a4286a;
+  box-shadow: 0 0 1rem #a4286a;
+}
+
+kbd {
+  display: block;
+  font-size: 4rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sound {
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: .1rem;
+  font-weight: 600;
+  color: #a4286a;
+  background: rgba(0, 255, 55, 0.747);
+}
+
+.coverup {
+  position: absolute;
+  height: 80px;
+  right: 0px;
+  bottom: 0px;
+}
