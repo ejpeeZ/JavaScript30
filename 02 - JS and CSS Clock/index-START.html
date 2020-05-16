@@ -11,7 +11,9 @@
       <div class="clock-face">
         <div class="hand hour-hand"></div>
         <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
+        <div class="hand second-hand">
+          <div class="second-circle"></div>
+        </div>
       </div>
     </div>
 
@@ -62,13 +64,73 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform: rotate(90deg);
+      transform-origin: 100%;
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+    }
+
+    .hour-hand {
+      width: 30%;
+      left: 20%;
+    }
+
+    .second-hand {
+      height: 3px;
+      background: red;
+    }
+
+    .second-circle {
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      display: inline-block;
+      background: red;
+      top: -9px;
+      left: -50%;
+      position: relative;
     }
 
   </style>
 
   <script>
+    // Grab the hands
+    const HourHand = document.querySelector( '.hour-hand' );
+    const MinHand = document.querySelector( '.min-hand' );
+    const SecHand = document.querySelector( '.second-hand' );
 
+    function getDate() {
+      // Get the time
+      const now = new Date();
 
+      // Get H:m:s
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+
+      // Transform to degrees, and add 90 because we start 90 degrees turned.
+      const minutesDeg = (( minutes / 60 ) * 360 ) + 90;
+      const secondsDeg = (( seconds / 60 ) * 360 ) + 90;
+      const hoursDeg = ( ( hours / 12 ) * 360 ) + ( ( minutes / 60 ) * 30 ) + 90;
+
+      console.log( hours );
+      if ( secondsDeg === 90 ) {
+        SecHand.style.transition = "none";
+      }
+      if ( minutesDeg === 90 ) {
+        MinHand.style.transition = "none";
+      }
+      if ( hoursDeg === 90 ) {
+        HourHand.style.transition = "none";
+      }
+
+      // Set hands
+      HourHand.style.transform = `rotate(${ hoursDeg }deg)`;
+      MinHand.style.transform = `rotate(${ minutesDeg }deg)`;
+      SecHand.style.transform = `rotate(${ secondsDeg }deg)`;
+    };
+
+    setInterval( getDate, 1000 );
   </script>
 </body>
 </html>
