@@ -31,21 +31,45 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const filter1500 = inventor => inventor.year >=1500 && inventor.year < 1600;
+    const bornIn1500 = inventors.filter( filter1500 );
+    bornIn1500.forEach(
+      inventor => console.log( `${inventor.first} ${inventor.last} was born` + 
+      ` in the 1500. Specifically, in ${inventor.year}.`
+    ) );
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const firstAndLastNames = inventors.map( inventor => inventor.first + " " + inventor.last );
+    console.log( firstAndLastNames );
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const sortByBirthdate = ( a, b ) => { return a.year - b.year };
+    const sortedByAge = inventors.sort( sortByBirthdate );
+    console.table( sortedByAge );
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const accumulateLifetimes = ( accumulator, currentValue ) => accumulator + ( currentValue.passed - currentValue.year );
+    const yearsAlive = inventors.reduce( accumulateLifetimes, 0 );
+    console.log( yearsAlive );
 
     // 5. Sort the inventors by years lived
+    const getYearsLived = ( inventor ) => { return inventor.passed - inventor.year };
+    const sortByYearsLived = ( a, b ) => { return getYearsLived( a ) - getYearsLived( b ) }
+    const sortedByYearsLived = inventors.sort( sortByYearsLived );
+    console.table( sortedByYearsLived );
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    /* paste the following into a console at the above URL */
+    const category = document.querySelector( '.mw-category' );
+    const links = category.querySelectorAll( 'a' );
+    const boulevards = [];
+    links.forEach( link => boulevards.push( link.textContent ) );
+    const deContainingBlvds = boulevards.filter( boulevard => boulevard.includes( " de " ) );
+    console.table( deContainingBlvds );
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
