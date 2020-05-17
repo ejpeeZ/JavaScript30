@@ -17,6 +17,67 @@
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
+const cities = [];
+
+async function getCities() {
+  const response = await fetch( endpoint );
+  const result = await response.json();
+  cities.push( ...result );
+};
+
+getCities();
+
+const search = document.querySelector( '.search' );
+const suggestions = document.querySelector( '.suggestions' );
+
+function findMatches( wordToMatch ) {
+  const regexToMatch = new RegExp( wordToMatch, "gi" );
+
+  return cities.filter(
+    city => city.city.match( regexToMatch ) || city.state.match( regexToMatch )
+  );
+}
+
+function highlightSearchString( wordToHighlight, regexToMatch, search ) {
+  return wordToHighlight.replace( regexToMatch, `<span class="hl">${search}</span>` );
+};
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function displaySuggestions() {
+  // Clear and return for empty search.
+  if ( this.value === "" ) {
+    suggestions.innerHTML="<li>Filter for a city</li><li>or a state</li>";
+    return;
+  }
+
+  const regexToMatch = new RegExp( this.value, "gi" );
+  const html = findMatches( this.value )
+    .map(
+      ( { city, state, population } ) => {
+        hlCity = highlightSearchString( city, regexToMatch, this.value );
+        hlState = highlightSearchString( state, regexToMatch, this.value );
+        return `
+          <li>
+            <span>
+              ${hlCity}, ${hlState}
+            </span>
+            <span class="population">
+              ${numberWithCommas( population )}
+            </span>
+          </li>
+        `;
+      }
+    )
+    .join("");
+  suggestions.innerHTML = html;
+}
+
+search.addEventListener( "change", displaySuggestions );
+search.addEventListener( "keyup", displaySuggestions );
+
 </script>
 </body>
 </html>
