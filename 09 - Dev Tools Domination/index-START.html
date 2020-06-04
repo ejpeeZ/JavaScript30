@@ -9,7 +9,7 @@
   <p onClick="makeGreen()">×BREAK×DOWN×</p>
 
   <script>
-    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'Hugo', age: 8 }];
 
     function makeGreen() {
       const p = document.querySelector('p');
@@ -18,28 +18,57 @@
     }
 
     // Regular
+    console.log( "blerp" );
 
     // Interpolated
+    console.log( "hello I am a %s!", "LADIEDODIEHOI" );
 
     // Styled
+    console.log( "%cI am some great text", "font-size: 50px; background-color: green;" );
 
     // warning!
+    console.warn( "yellow alert!" );
 
     // Error :|
+    console.error( "Red alert! Battlestations!" );
 
     // Info
+    console.info( "Did you know you are awesome? True story!" );
 
     // Testing
+    const flerp = document.querySelector( "p" );
+
+    console.assert( flerp.classList.contains( "derp" ), "No derp in the flerp!" );
 
     // clearing
+    console.clear();
 
     // Viewing DOM Elements
+    console.log( flerp );
+    console.dir( flerp );
 
     // Grouping together
+    dogs.forEach( ( dog ) => {
+      console.groupCollapsed( `%c${ dog.name }`, "background-color: red; font-size: 24px;" );
+      console.log( `This is ${ dog.name }.` );
+      console.log( `${ dog.name } is ${ dog.age } years old.` );
+      console.log( `${ dog.name } is ${ dog.age * 7 } dog years old.` );
+      console.groupEnd();
+    } );
 
     // counting
+    console.count( "Cordon blue" );
+    console.count( "Cordon blue" );
+    console.count( "Cordon blue" );
+    console.count( "Cordon blue" );
+    console.count( "Cordon blue" );
 
     // timing
+    console.time( "flerp" );
+    setTimeout( () => { console.timeEnd( "flerp" ) }, 1000 );
+
+    //table
+    array.table( dogs );
 
   </script>
 </body>
