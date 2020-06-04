@@ -96,6 +96,34 @@
   </div>
 
 <script>
+  const inbox = document.querySelector( ".inbox" );
+  console.dir( inbox );
+  const checkboxes=document.querySelectorAll( "input" );
+  console.log( checkboxes );
+  let lastClickedIndex;
+  const selectFunction = ( event, index ) => {
+    if ( event.shiftKey ) {
+      let indexesToClick = [];
+      // Also select all index in between.
+      if ( lastClickedIndex > index ) {
+        for ( let i = index + 1; i <= lastClickedIndex - 1; i++ ) {
+          indexesToClick.push( i );
+        }
+      }
+      if ( lastClickedIndex < index ) {
+        for ( let i = lastClickedIndex + 1; i <= index - 1; i++ ) {
+          indexesToClick.push( i );
+        }
+      }
+      indexesToClick.forEach( ( indexToClick ) => checkboxes[ indexToClick ].checked = ! checkboxes[ indexToClick ].checked );
+    };
+    
+    lastClickedIndex = index;
+  }
+
+  checkboxes.forEach( ( checkbox, index )  => {
+    checkbox.addEventListener( "click", ( event ) => selectFunction( event, index ) );
+  } )
 </script>
 </body>
 </html>
