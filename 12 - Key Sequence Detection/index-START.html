@@ -7,6 +7,18 @@
 </head>
 <body>
 <script>
+  const targetSequence = "esther";
+  const targetLength = targetSequence.length;
+  const pressedArray = [];
+  window.addEventListener( "keyup", ( e ) => {
+    pressedArray.push( e.key );
+    if ( pressedArray.length > targetSequence.length ) {
+      pressedArray.splice( 0, 1 );
+    };
+    if ( pressedArray.join( "" ) === targetSequence ) {
+      cornify_add();
+    };
+  } );
 </script>
 </body>
 </html>
