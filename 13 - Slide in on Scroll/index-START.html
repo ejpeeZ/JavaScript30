@@ -58,6 +58,32 @@
       };
     }
 
+    const slidingImages = document.querySelectorAll( ".slide-in" );
+
+    const isPositionInView = ( position ) => {
+      const topBoundary = window.scrollY;
+      const bottomBoundary = topBoundary + window.innerHeight;
+      const isBelowTop = position > topBoundary;
+      const isAboveBottom = position < bottomBoundary;
+
+      return isBelowTop && isAboveBottom;
+    }
+
+    const checkSlide = ( e ) => {
+      slidingImages.forEach( ( slidyBoy, index ) => {
+
+        // Position of the middle of the image
+        middleOfSlidyBoy = slidyBoy.offsetTop + slidyBoy.height / 2;
+        if ( isPositionInView( middleOfSlidyBoy ) ) {
+          slidyBoy.classList.add( "active" );
+        }
+        else {
+          slidyBoy.classList.remove( "active" );
+        }
+      } )
+    };
+
+    window.addEventListener( "scroll", debounce( checkSlide ) );
   </script>
 
   <style>
