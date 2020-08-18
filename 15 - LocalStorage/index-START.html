@@ -21,15 +21,91 @@
     </ul>
     <form class="add-items">
       <input type="text" name="item" placeholder="Item Name" required>
-      <input type="submit" value="+ Add Item">
+	  <input type="submit" value="+ Add Item">
+	  <input type="button" name="clear" value="Clear">
+	  <input type="button" name="toggle-all" value="Toggle all">
     </form>
   </div>
 
 <script>
-  const addItems = document.querySelector('.add-items');
-  const itemsList = document.querySelector('.plates');
-  const items = [];
+	const addItems = document.querySelector('.add-items');
+	const itemsList = document.querySelector('.plates');
+	let items = JSON.parse( localStorage.getItem( "items" ) ) || [];
 
+	const clearButton = document.querySelector( "input[name=clear]" );
+	const toggleAllButton = document.querySelector( "input[name=toggle-all]" );
+
+	function addItem ( event ) {
+		event.preventDefault();
+
+		const addedItem = this.querySelector( "[name=item]" );
+		items.push( {
+			text: addedItem.value,
+			done: false,
+		} );
+
+		persistList( items, itemsList );
+
+		this.reset();
+	}
+
+	function populateList( items, list ) {
+		if ( items.length < 1 ) {
+			return list.innerHTML = "<li>Loading Tapas...</li>";
+		}
+		list.innerHTML = items.map( ( item, index ) => {
+			return `
+			<li>
+				<input id="item_${ index }" data-index=${ index } type="checkbox" ${ item.done ? "checked" : "" } />
+				<label for="item_${ index }">
+					${ item.text }
+				</label>
+			</li>`;
+		} ).join( "" );
+	}
+
+	function toggleDone( e ) {
+		if ( ! e.target.matches( "input" ) ) {
+			return ;
+		}
+		const toggleAtIndex = e.target.dataset.index;
+		items[ toggleAtIndex ].done = ! items[ toggleAtIndex ].done;
+
+		persistList( items, itemsList );
+	};
+
+	function persistList( items, list ) {
+		localStorage.setItem( "items", JSON.stringify( items ) );
+		populateList( items, itemsList );
+	};
+
+	function clearItems() {
+		items = [];
+		persistList( items, itemsList );
+	};
+
+	const setAll = ( items, value ) => {
+		return items.map( item => {
+			return { text: item.text, done: value };
+		} );
+	}
+
+	function toggleAll( e ) {
+		if ( items[ 0 ].done ) {
+			items = setAll( items, false );
+		} else {
+			items = setAll( items, true );
+		}
+
+		persistList( items, itemsList );
+	}
+
+	addItems.addEventListener( "submit", addItem );
+	itemsList.addEventListener( "click", toggleDone );
+
+	clearButton.addEventListener( "click", clearItems );
+	toggleAllButton.addEventListener( "click", toggleAll );
+	populateList( items, itemsList );
 </script>
 
 
