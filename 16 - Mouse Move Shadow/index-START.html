@@ -35,6 +35,40 @@
   </style>
 
 <script>
+	const hero = document.querySelector( ".hero" );
+	const text = hero.textContent;
+	const el1 = hero.querySelector( "h1" );
+
+	const walk = 350; // 100px;
+
+	// Window size.
+	const { innerWidth: windowX, innerHeight: windowY } = window;
+
+	function calculateShadow( clientX, clientY ) {
+		// non-normalized shadow position (not "thethered" to hero, so to say... )
+		const rawShadowX = ( windowX / 2 ) - clientX;
+		const rawShadowY = ( windowY / 2 ) - clientY;
+
+		// normalized by window space available to max spread (walk) defined at the top.
+		const walkX = walk * ( rawShadowX / windowX );
+		const walkY = walk * ( rawShadowY / windowY );
+		return {
+			shadowX: walkX,
+			shadowY: walkY,
+		};
+	}
+
+	function moveShadow( event ) {
+		const { shadowX, shadowY } = calculateShadow( event.clientX, event.clientY );
+		el1.style.textShadow = `
+			${shadowX}px ${shadowY}px 0 rgb( 255,0,0,0.7 ),
+			${shadowY}px ${-shadowX}px 0 rgb( 0,255,0,0.7 ),
+			${-shadowY}px ${shadowX}px 0 rgb( 0,0,255,0.7 ),
+			${-shadowX}px ${-shadowY}px 0 rgb( 255,0,255,0.7 )
+		`;
+	}
+
+	window.addEventListener( "mousemove", moveShadow );
 </script>
 </body>
 </html>
