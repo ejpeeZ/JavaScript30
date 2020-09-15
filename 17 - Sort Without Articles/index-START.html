@@ -48,6 +48,29 @@
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
+const bandList = document.getElementById( "bands" );
+
+const articles = [ "the", "a", "an" ];
+
+function maybeStripArticle( bandName ) {
+	let words = bandName.split( " " );
+	if ( articles.includes( words[ 0 ].toLowerCase() ) ) {
+		words.shift();
+	}
+	return words.join( " " );
+};
+
+// Wesbos uses regex:
+function stripWes( bandName ) {
+	return bandName.replace( /^(the |an |a )/i, "" );
+}
+
+bands.sort( ( bandA, bandB ) => {
+	// return maybeStripArticle( bandA ) >= maybeStripArticle( bandB ) ? 1 : -1;
+	return stripWes( bandA ) >= stripWes( bandB ) ? 1 : -1;
+} );
+
+bandList.innerHTML = bands.map( bandName => `<li>${bandName}</li>` ).join( '' );
 
 </script>
 
