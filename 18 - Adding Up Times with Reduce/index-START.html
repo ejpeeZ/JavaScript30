@@ -182,6 +182,30 @@
     </li>
   </ul>
 <script>
+	const videoList = Array.from( document.querySelectorAll( ".videos li" ) );
+	const timeArray = videoList.map( video => video.dataset.time );
+	console.log( timeArray );
+	const settleOverflow = ( { h, m, s } ) => {
+		if ( s >= 60) {
+			s = s % 60;
+			m += 1;
+		}
+		if ( m >= 60) {
+			m = m % 60;
+			h += 1;
+		}
+		console.log( `${h}:${m}:${s}`);
+		return { h, m, s };
+	}
+	const totalDuration = timeArray.reduce( ( aggregator, time ) => {
+		let [ minutes, seconds ] = time.split( ":" );
+		aggregator.s += parseInt( seconds, 10 );
+		aggregator.m += parseInt( minutes, 10 );
+
+		return settleOverflow( aggregator );
+	}, { h: 0, m: 0, s: 0 } );
+
+	console.log( totalDuration );
 </script>
 </body>
 </html>
